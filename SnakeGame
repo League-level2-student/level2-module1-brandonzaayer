@@ -37,7 +37,7 @@ ArrayList<Segment> tail = new ArrayList<Segment>();
 void setup() {
 size(500, 500);
 head = new Segment(250, 250);
-frameRate(20);
+frameRate(10);
 dropFood();
 }
 
@@ -72,6 +72,7 @@ void drawSnake() {
   //Draw the head of the snake followed by its tail
 fill(0, 255, 0);
 rect(head.xPos, head.yPos, 10, 10);
+manageTail();
 }
 
 
@@ -99,10 +100,14 @@ void manageTail() {
 
 void checkTailCollision() {
   //If the snake crosses its own tail, shrink the tail back to one segment
-  
+  for(Segment s: tail){
+      if(head.xPos == s.xPos && head.yPos == s.yPos){
+       tail = new ArrayList<Segment>();
+       foodCount = 0;
+    }
 }
 
-
+}
 
 //*
 // ***** CONTROL METHODS *****
@@ -168,5 +173,6 @@ if(head.xPos == foodX && head.yPos == foodY){
   foodCount++;
   dropFood();
   drawTail();
+  tail.add(new Segment(head.xPos, head.yPos));
 }
 }
